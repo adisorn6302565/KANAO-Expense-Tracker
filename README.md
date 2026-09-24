@@ -1,6 +1,6 @@
-# 💰 Personal Expense Tracker
+# 💰 KANAO Expense Tracker
 
-[![Build](https://github.com/adisorn6302565/Personal-Expense-Tracker---/actions/workflows/build.yml/badge.svg)](https://github.com/adisorn6302565/Personal-Expense-Tracker---/actions/workflows/build.yml)
+[![Build](https://github.com/adisorn6302565/KANAO-Expense-Tracker/actions/workflows/build.yml/badge.svg)](https://github.com/adisorn6302565/KANAO-Expense-Tracker/actions/workflows/build.yml)
 ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)
 
@@ -12,7 +12,7 @@
 
 **ไม่ต้องติดตั้ง และไม่ต้องลง .NET** เป็น EXE ไฟล์เดียว
 
-1. ดาวน์โหลด **`PersonalExpenseTracker.exe`** จาก [**Releases ล่าสุด**](../../releases/latest)
+1. ดาวน์โหลด **`KANAO-ExpenseTracker.exe`** จาก [**Releases ล่าสุด**](../../releases/latest)
 2. ดับเบิลคลิกเปิดได้เลย
    - ถ้า SmartScreen เตือน: **More info → Run anyway** (ไฟล์ยังไม่ได้ sign)
 

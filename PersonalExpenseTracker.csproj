@@ -5,8 +5,9 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <Version>1.1.0</Version>
-    <AssemblyName>PersonalExpenseTracker</AssemblyName>
+    <Version>1.1.1</Version>
+    <AssemblyName>KANAO-ExpenseTracker</AssemblyName>
+    <Product>KANAO Expense Tracker</Product>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <SelfContained>true</SelfContained>
     <PublishSingleFile>true</PublishSingleFile>
