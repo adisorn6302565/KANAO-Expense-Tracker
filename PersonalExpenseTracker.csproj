@@ -24,9 +24,22 @@
 
   <!-- WPF's temporary markup project passes every roslynX.Y copy of the MVVM generator,
        producing duplicate members (CS0102). Keep one copy that works on any .NET 8 SDK. -->
+  <!-- The WPF temp project can load the MVVM generator from several roslyn* folders at once (CS0102).
+       Only when that happens, keep the newest folder this compiler supports. -->
   <Target Name="DedupeMvvmGenerators" BeforeTargets="CoreCompile">
     <ItemGroup>
-      <Analyzer Remove="@(Analyzer)" Condition="$([System.String]::Copy('%(Analyzer.Identity)').Contains('communitytoolkit.mvvm')) And !$([System.String]::Copy('%(Analyzer.Identity)').Contains('roslyn4.3'))" />
+      <_MvvmGen Include="@(Analyzer)" Condition="$([System.String]::Copy('%(Analyzer.Identity)').ToLowerInvariant().Contains('communitytoolkit.mvvm'))" />
+      <_MvvmDir Include="@(_MvvmGen->'%(RootDir)%(Directory)'->Distinct())" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_RoslynVer>$(CompilerApiVersion.Replace('roslyn', ''))</_RoslynVer>
+      <_RoslynVer Condition="'$(_RoslynVer)' == ''">4.0</_RoslynVer>
+      <_MvvmKeep>roslyn4.0</_MvvmKeep>
+      <_MvvmKeep Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(_RoslynVer)', '4.3'))">roslyn4.3</_MvvmKeep>
+      <_MvvmKeep Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(_RoslynVer)', '4.12'))">roslyn4.12</_MvvmKeep>
+    </PropertyGroup>
+    <ItemGroup Condition="@(_MvvmDir->Count()) &gt; 1">
+      <Analyzer Remove="@(_MvvmGen)" Condition="!$([System.String]::Copy('%(Identity)').Contains('\$(_MvvmKeep)'))" />
     </ItemGroup>
   </Target>
 
