@@ -135,9 +135,43 @@ namespace PersonalExpenseTracker
             }
         }
 
+        [RelayCommand]
+        private void Export()
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = "CSV (*.csv)|*.csv",
+                FileName = $"expenses-{SelectedYear}-{SelectedMonthIndex + 1:00}.csv"
+            };
+            if (dialog.ShowDialog() != true) return;
+
+            try
+            {
+                DatabaseService.ExportCsv(dialog.FileName, Transactions);
+                MessageBox.Show($"ส่งออก {Transactions.Count} รายการแล้ว\n{dialog.FileName}", "ส่งออกสำเร็จ");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"ส่งออกไม่สำเร็จ: {ex.Message}", "ผิดพลาด", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void LoadData()
         {
             _allTransactions = _databaseService.GetAllTransactions();
+
+            // show every year that has data (plus the last 6), not only a fixed window
+            var years = _allTransactions.Select(t => t.Date.Year)
+                .Concat(Enumerable.Range(DateTime.Now.Year - 5, 6))
+                .Where(y => y > 1900)
+                .Distinct()
+                .OrderByDescending(y => y);
+            foreach (var y in years)
+                if (!Years.Contains(y)) Years.Add(y);
+            var sorted = Years.OrderByDescending(y => y).ToList();
+            for (int i = 0; i < sorted.Count; i++)
+                if (Years[i] != sorted[i]) Years.Move(Years.IndexOf(sorted[i]), i);
+
             FilterData();
         }
 

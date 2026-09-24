@@ -1,8 +1,11 @@
-bin/
-obj/
+[Bb]in/
+[Oo]bj/
+publish/
+out/
+Build/
 .vs/
 *.user
 *.suo
-*.db
-*.db-shm
-*.db-wal
+*.exe
+*.zip
+*.rar
